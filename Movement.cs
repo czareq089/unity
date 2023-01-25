@@ -1,27 +1,39 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 
 public class Movement : MonoBehaviour
 {
-    public Vector2 speed = new Vector2(50, 50);
-
+    public  float speed = 1.0f;
+    private Rigidbody2D rb;
+    private float inputX;
+    public float limit = 2.0f;
 
     void Start()
     {
-
+         rb = GetComponent<Rigidbody2D>();
     }
-
     void Update()
     {
+        inputX = Input.GetAxis("Horizontal");
+        Debug.Log(rb.angularVelocity);
+    }
+    void FixedUpdate()
+    {
+            rb.AddForce(new Vector2(inputX * speed, 0));
 
-        var inputX = Input.GetAxis("Horizontal");
+            if(inputX == 0)
+            {
+                rb.angularVelocity = 0;
+            }
 
-        Vector2 movement = new Vector2(speed.x * inputX / 8, speed.y * 0);
-        movement *= Time.deltaTime;
-
-        transform.Translate(movement);
+            if(rb.velocity.magnitude > limit)
+            {
+                rb.angularVelocity = limit;
+            }
     }
 }
 
