@@ -7,10 +7,11 @@ using UnityEngine.UIElements;
 
 public class Movement : MonoBehaviour
 {
-    public  float speed = 1.0f;
+    public  float speed = 8f;
     private Rigidbody2D rb;
     private float inputX;
-    public float limit = 2.0f;
+    public float limit = 16f;
+
 
     void Start()
     {
