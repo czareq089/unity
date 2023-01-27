@@ -1,13 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class Obstacle : MonoBehaviour
 {
-    public float speed = 2f;
-    public float speedneg = -2f;
-    Rigidbody2D rb;
-    private float limit = 0f;
+    public Vector2 distance = new Vector2(0, 3);
+    public Vector2 negdist = new Vector2(0, -6);
+    private float limit;
     // Start is called before the first frame update
     void Start()
     {
@@ -17,16 +17,15 @@ public class Obstacle : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(limit == 0 || limit % 2 != 0)
-        { 
-            rb.AddForce(new Vector2(0, speed));
-            limit++;
-        }
-        if(limit % 2 == 0)
+        limit++;
+        if (limit == 1 || limit == 2 || limit == 3)
         {
-            rb.AddForce(new Vector2(0, speedneg));
+            transform.position = Vector2.Lerp(transform.position, distance, Time.deltaTime);
         }
-
+        else if (limit == 4 || limit == 5 || limit == 6)
+        {
+            transform.position = Vector2.Lerp(transform.position, negdist, Time.deltaTime);
+        }
         Debug.Log(limit);
     }
 }
